@@ -1,0 +1,126 @@
+<div class="container-fluid">
+    <div class="row header">
+        <div class="col-6">
+            <h4 class="text-white">Etudiant</h4>
+        </div>
+        <div class="col-6 text-end">
+            <button class="btn btn-outline-info" (click)="openModel()">Add Etudiant</button>
+        </div>
+    </div>
+    <div class="row">
+        @for (etd of etudiantList; track $index) {
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-6">
+                                {{etd.name | uppercase}}
+                            </div>
+                            <div class="col-6" text-end>
+                                {{etd.mobile}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p><b>Email : </b><span style="float: right;">{{etd.email}}</span></p>
+                        <p><span><b>Genre : </b>{{etd.gender | titlecase}}</span><span style="float: right;"><b>Date : </b>{{etd.doj}}</span></p>
+                        <p><b>Adresse : </b><span style="float: right;">{{etd.adresse}}</span></p>
+                        <p><b>Status : </b><span style="float: right;">{{etd.status ? 'Active' : 'Inactive'}}</span></p>
+                    </div>
+    
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-6">
+                                <i class="btn fa fa-edit text-primary" (click)="onEditEtudiant(etd)" style="font-size: 25px;"></i>
+                            </div>
+                            <div class="col-6 text-end">
+                                <i class="btn fa fa-trash text-danger" (click)="onDeleteEtudiant(etd)" style="font-size: 25px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        
+    </div>
+</div>
+
+
+
+<div class="modal" id="myModal" #myModal>
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                @if(etudiants.id == 0){
+                    <h4 class="modal-title">Ajouter un etudiant</h4>
+                }@else {
+                    <h4 class="modal-title">Modifier un etudiant</h4>
+                }
+                
+                <button type="button" class="btn-close" (click)="closeMedel()"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <input type="text" [(ngModel)]="etudiants.name" class="form-control" placeholder="Name" name="name">
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <input type="text" [(ngModel)]="etudiants.email" class="form-control" placeholder="Email" name="email">
+                    </div>
+
+                    <div class="col-6">
+                        <input type="text" [(ngModel)]="etudiants.mobile" class="form-control" placeholder="Mobile" name="mobile">
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <select class="form-control" [(ngModel)]="etudiants.gender">
+                            <option value="">Genre</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-6">
+                        <input type="date" [(ngModel)]="etudiants.doj" class="form-control" placeholder="Date" name="doj">
+                    </div>
+                </div>
+
+                <div class="row" mt-3>
+                    <div class="col-12">
+                       <textarea cols="5" rows="3" type="text" [(ngModel)]="etudiants.adresse" placeholder="Adresse" class="form-control"></textarea>
+                    </div>
+                </div>
+                
+                <div class="row" mt-3>
+                    <div class="col-12">
+                       <div class="form-group form-check">
+                        <input type="checkbox" [(ngModel)]="etudiants.status" class="form-check-input">
+                        <label for="">Active</label>
+                       </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="closeMedel()">Close</button>
+                @if(etudiants.id == 0){
+                    <button type="button" class="btn btn-primary" (click)="onSaveForm()">Save</button>
+                }@else {
+                    <button type="button" class="btn btn-primary" (click)="onUpdateForm()">Update</button>
+                }
+                
+            </div>
+
+        </div>
+    </div>
+</div>
